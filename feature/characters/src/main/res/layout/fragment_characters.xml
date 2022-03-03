@@ -8,14 +8,14 @@
     android:fitsSystemWindows="true">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/citiesRefresh"
+        android:id="@+id/charactersRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/cityList"
+            android:id="@+id/CharacterList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background"
