@@ -1,13 +1,12 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'com.android.library'
+    id 'kotlin-android'
 }
 
 android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "gorosheg.myapplication"
         minSdk 21
         targetSdk 31
         versionCode 1
@@ -21,6 +20,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true // for using color res in xml
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
