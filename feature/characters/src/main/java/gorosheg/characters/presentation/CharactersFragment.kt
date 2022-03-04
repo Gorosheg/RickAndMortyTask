@@ -9,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import gorosheg.characters.R
 import gorosheg.characters.presentation.recicler.CharacterAdapter
 import gorosheg.myapplication.Character
+import gorosheg.myapplication.showToast
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -45,6 +46,21 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
             .subscribe { character ->
                 adapter.items = character
             }
+
+        disposable += viewModel.error
+            .subscribe(::makeToast)
+    }
+
+    private fun makeToast(throwable: NetworkExceptions) {
+        when (throwable) {
+            NetworkExceptions.NotFound -> {
+                showToast(R.string.character_not_found.toString())
+            }
+
+            NetworkExceptions.Unknown -> {
+                showToast(R.string.unknown_error.toString())
+            }
+        }
     }
 
     companion object {

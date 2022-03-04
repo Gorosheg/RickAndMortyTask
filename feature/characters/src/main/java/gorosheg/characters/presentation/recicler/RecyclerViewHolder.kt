@@ -27,7 +27,7 @@ class RecyclerViewHolder(
         this.character = character
         characterName.text = character.name
 
-        Glide // Добавление изображения из интернета
+        Glide
             .with(charView) // context
             .load(character.image) // Ссылка на изображение
             .into(characterPhoto) // View
