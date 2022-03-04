@@ -30,6 +30,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         recyclerView.adapter = adapter
 
         loadCharacters()
+        swipeRefresh.setOnRefreshListener { loadCharacters() }
     }
 
     override fun onDestroy() {
@@ -42,6 +43,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
     }
 
     private fun loadCharacters() {
+        loaderChange(true)
         disposable += viewModel.loadCharacters()
             .subscribe { character ->
                 adapter.items = character
@@ -49,18 +51,23 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
         disposable += viewModel.error
             .subscribe(::makeToast)
+        loaderChange(false)
     }
 
     private fun makeToast(throwable: NetworkExceptions) {
         when (throwable) {
             NetworkExceptions.NotFound -> {
-                showToast(R.string.character_not_found.toString())
+                showToast(getString(R.string.character_not_found))
             }
 
             NetworkExceptions.Unknown -> {
-                showToast(R.string.unknown_error.toString())
+                showToast(getString(R.string.unknown_error))
             }
         }
+    }
+
+    private fun loaderChange(it: Boolean) {
+        swipeRefresh.isRefreshing = it
     }
 
     companion object {

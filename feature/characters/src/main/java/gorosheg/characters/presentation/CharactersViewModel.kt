@@ -20,6 +20,7 @@ internal class CharactersViewModel(private val interactor: CharactersInteractor)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError(::handleError)
+            .onErrorReturn { emptyList() }
     }
 
     private fun handleError(throwable: Throwable) {
