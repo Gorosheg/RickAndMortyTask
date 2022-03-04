@@ -1,6 +1,8 @@
 package gorosheg.network.model
 
-class RickAndMortyResponse(
+import com.google.gson.annotations.SerializedName
 
-) {
-}
+class RickAndMortyResponse(
+    @SerializedName("results")
+    val info: List<CharacterInfo>,
+)

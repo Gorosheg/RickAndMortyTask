@@ -3,8 +3,8 @@ package gorosheg.characters.presentation.recicler
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import gorosheg.myapplication.Character
 import gorosheg.characters.R
-import gorosheg.characters.presentation.model.Character
 
 class RecyclerViewHolder(
     charView: View,

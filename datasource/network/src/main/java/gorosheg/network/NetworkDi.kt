@@ -16,7 +16,7 @@ val networkModule = module {
         Retrofit.Builder()
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://rickandmortyapi.com/api")
+            .baseUrl("https://rickandmortyapi.com/api/")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(CharactersApi::class.java)

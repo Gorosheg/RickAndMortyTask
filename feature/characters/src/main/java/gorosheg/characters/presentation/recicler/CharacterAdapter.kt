@@ -3,10 +3,10 @@ package gorosheg.characters.presentation.recicler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import gorosheg.myapplication.Character
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import gorosheg.characters.R
-import gorosheg.characters.presentation.model.Character
 
 internal class CharacterAdapter(
     private val onCharClick: (Character) -> Unit
