@@ -8,19 +8,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val networkModule = module {
-
-    factory<NetworkDatasource> {
-        NetworkDatasourceImpl(api = get())
+    single<NetworkDatasource> {
+        NetworkDatasourceImpl(get())
     }
+
     single {
         Retrofit.Builder()
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://rickandmortyapi.com/api/")
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
             .build()
             .create(CharactersApi::class.java)
     }
+
+    single { RxJava2CallAdapterFactory.create() }
 
     single {
         OkHttpClient().newBuilder()

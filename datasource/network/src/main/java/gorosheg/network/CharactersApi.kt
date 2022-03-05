@@ -11,22 +11,14 @@ import retrofit2.http.Query
 internal interface CharactersApi {
 
     @GET("character/?")
-    fun getAll(
-        @Query("page") page: Int
-    ): Single<CharactersResponse>
+    fun getAll(@Query("page") page: Int): Single<CharactersResponse>
 
     @GET("character/{id}")
-    fun getCharacter(
-        @Path("id") id: Int
-    ): Single<DescriptionResponse>
+    fun getCharacter(@Path("id") id: Int): Single<DescriptionResponse>
 
     @GET("location/{id}")
-    fun getLocation(
-        @Path("id") id: Int
-    ): Single<LocationResponse>
+    fun getLocation(@Path("id") id: Int): Single<LocationResponse>
 
     @GET("character/?")
-    fun getEpisodes(
-        @Query("name") name: String
-    ): Single<CharactersResponse>
+    fun getEpisodes(@Query("name") name: String): Single<CharactersResponse>
 }

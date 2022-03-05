@@ -6,4 +6,10 @@ class Description(
     val image: String,
     val status: String,
     val species: String
-)
+) {
+
+    companion object {
+
+        fun empty() = Description(0, "", "", "", "")
+    }
+}

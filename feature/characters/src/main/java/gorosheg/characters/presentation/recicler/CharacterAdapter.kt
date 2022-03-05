@@ -1,12 +1,12 @@
-package gorosheg.characters.presentation.recicler
+package gorosheg.characters.presentation.recicler//typo
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import gorosheg.myapplication.model.Character
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import gorosheg.characters.R
+import gorosheg.myapplication.model.Character
+import gorosheg.myapplication.utils.inflate
 
 internal class CharacterAdapter(
     private val onCharClick: (Character) -> Unit
@@ -20,8 +20,7 @@ internal class CharacterAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_of_characters, parent, false)
+        val view: View = parent.inflate(R.layout.list_of_characters)
         return RecyclerViewHolder(view, onCharClick)
     }
 

@@ -9,7 +9,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val charactersModule = module {
-
     viewModel {
         CharactersViewModel(
             interactor = get()
@@ -23,5 +22,4 @@ val charactersModule = module {
     factory<CharactersRepository> {
         CharactersRepositoryImpl(network = get())
     }
-
 }

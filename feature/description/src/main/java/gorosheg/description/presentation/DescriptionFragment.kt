@@ -11,20 +11,22 @@ import gorosheg.description.R
 import gorosheg.myapplication.R.*
 import gorosheg.myapplication.model.Description
 import gorosheg.myapplication.model.Location
-import gorosheg.myapplication.showToast
+import gorosheg.myapplication.utils.showToast
 import gorosheg.myapplication.model.NetworkExceptions
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class DescriptionFragment : Fragment(R.layout.fragment_description) {
     private val rootView by lazy { requireNotNull(view) }
     private val disposable = CompositeDisposable()
-    private val viewModel: DescriptionViewModel by viewModel()
 
     private val characterId: Int by lazy {
-        arguments?.getSerializable(CHARACTER_KEY) as Int
+        arguments?.getInt(CHARACTER_KEY) as Int
     }
+
+    private val viewModel: DescriptionViewModel by viewModel { parametersOf(characterId) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,16 +39,12 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
     }
 
     private fun loadDescription() {
-        disposable += viewModel.loadDescription(characterId)
-            .doOnSuccess {
-                handleDescription(it)
-            }
+        disposable += viewModel.loadDescription()
+            .doOnSuccess(::handleDescription)
             .subscribe()
 
-        disposable += viewModel.loadLocation(characterId)
-            .doOnSuccess {
-                handleLocation(it)
-            }
+        disposable += viewModel.loadLocation()
+            .doOnSuccess(::handleLocation)
             .subscribe()
 
         disposable += viewModel.error
@@ -59,14 +57,11 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
         val species: TextView = rootView.findViewById(R.id.species)
         val status: TextView = rootView.findViewById(R.id.status)
 
-
-        Glide
-            .with(rootView)
+        Glide.with(rootView)
             .load(description.image)
             .into(photo)
 
         photo.clipToOutline = true
-
         name.text = description.name
         species.text = description.species
         status.text = description.status
@@ -96,9 +91,8 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
 
         fun newInstance(charId: Int) = DescriptionFragment().apply {
             arguments = Bundle().apply {
-                putSerializable(CHARACTER_KEY, charId)
+                putInt(CHARACTER_KEY, charId)
             }
         }
-
     }
 }

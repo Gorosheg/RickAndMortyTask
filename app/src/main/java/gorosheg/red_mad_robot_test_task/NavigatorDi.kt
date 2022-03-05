@@ -1,6 +1,6 @@
 package gorosheg.red_mad_robot_test_task
 
-import gorosheg.myapplication.CharacterNavigator
+import gorosheg.myapplication.navigator.CharacterNavigator
 import org.koin.dsl.module
 
 val appModule = module {

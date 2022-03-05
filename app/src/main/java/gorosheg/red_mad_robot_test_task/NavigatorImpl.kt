@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import gorosheg.characters.presentation.CharactersFragment
 import gorosheg.description.presentation.DescriptionFragment
-import gorosheg.myapplication.CharacterNavigator
-import gorosheg.myapplication.DescriptionNavigator
+import gorosheg.myapplication.navigator.CharacterNavigator
+import gorosheg.myapplication.navigator.DescriptionNavigator
 
 private const val CHARACTERS = "CharacterScreen"
 private const val DESCRIPTION = "Description"

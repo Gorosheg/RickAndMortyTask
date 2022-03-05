@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import gorosheg.characters.R
 import gorosheg.characters.presentation.recicler.CharacterAdapter
-import gorosheg.myapplication.CharacterNavigator
+import gorosheg.myapplication.navigator.CharacterNavigator
 import gorosheg.myapplication.R.*
 import gorosheg.myapplication.model.Character
-import gorosheg.myapplication.showToast
+import gorosheg.myapplication.utils.showToast
 import gorosheg.myapplication.model.NetworkExceptions
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -31,11 +31,9 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
-
-        loadCharacters()
         swipeRefresh.setOnRefreshListener { loadCharacters() }
+        loadCharacters()
     }
 
     override fun onDestroy() {
@@ -44,35 +42,30 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
     }
 
     private fun navigateToDescriptionScreen(character: Character) {
-        activity?.let { navigator.navigateToDescriptionScreen(it, character.id) }
+        navigator.navigateToDescriptionScreen(requireActivity(), character.id)
     }
 
     private fun loadCharacters() {
         loaderChange(true)
+
         disposable += viewModel.loadCharacters()
-            .subscribe { character ->
-                adapter.items = character
-            }
+            .subscribe { character -> adapter.items = character }
 
         disposable += viewModel.error
             .subscribe(::makeToast)
+
         loaderChange(false)
+    }
+
+    private fun loaderChange(isRefresh: Boolean) {
+        swipeRefresh.isRefreshing = isRefresh
     }
 
     private fun makeToast(throwable: NetworkExceptions) {
         when (throwable) {
-            NetworkExceptions.NotFound -> {
-                showToast(getString(string.info_not_found))
-            }
-
-            NetworkExceptions.Unknown -> {
-                showToast(getString(string.unknown_error))
-            }
+            NetworkExceptions.NotFound -> showToast(getString(string.info_not_found))
+            NetworkExceptions.Unknown -> showToast(getString(string.unknown_error))
         }
-    }
-
-    private fun loaderChange(it: Boolean) {
-        swipeRefresh.isRefreshing = it
     }
 
     companion object {

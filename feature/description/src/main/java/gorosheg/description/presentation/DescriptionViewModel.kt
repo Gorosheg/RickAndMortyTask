@@ -17,20 +17,20 @@ internal class DescriptionViewModel(private val repository: DescriptionRepositor
     private val _error = PublishSubject.create<NetworkExceptions>()
     val error: Observable<NetworkExceptions> = _error
 
-    fun loadDescription(id: Int): Single<Description> {
-        return repository.loadDescription(id)
+    fun loadDescription(): Single<Description> {
+        return repository.loadDescription()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError(::handleError)
-            .onErrorReturn { Description(id, "", "", "", "") }
+            .onErrorReturn { Description.empty() }
     }
 
-    fun loadLocation(id: Int): Single<Location> {
-        return repository.loadLocation(id)
+    fun loadLocation(): Single<Location> {
+        return repository.loadLocation()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError(::handleError)
-            .onErrorReturn { Location("", "") }
+            .onErrorReturn { Location.empty() }
     }
 
     private fun handleError(throwable: Throwable) {

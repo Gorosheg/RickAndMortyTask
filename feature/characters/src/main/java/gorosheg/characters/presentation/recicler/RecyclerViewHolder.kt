@@ -27,10 +27,9 @@ class RecyclerViewHolder(
         this.character = character
         characterName.text = character.name
 
-        Glide
-            .with(charView) // context
-            .load(character.image) // Ссылка на изображение
-            .into(characterPhoto) // View
+        Glide.with(charView)
+            .load(character.image)
+            .into(characterPhoto)
 
         characterPhoto.clipToOutline = true
     }

@@ -7,15 +7,11 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val descriptionModule = module {
-
-    viewModel {
-        DescriptionViewModel(
-            repository = get()
-        )
+    viewModel { params ->
+        DescriptionViewModel(get { params })
     }
 
-    factory<DescriptionRepository> {
-        DescriptionRepositoryImpl(network = get())
+    factory<DescriptionRepository> { params ->
+        DescriptionRepositoryImpl(get(), params.get())
     }
-
 }

@@ -32,25 +32,14 @@ internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDa
     }
 
     private fun CharactersResponse.toSimpleCharacter(): List<Character> {
-        return info.map {
+        return description.map {
             Character(it.id, it.name, it.image)
         }
     }
 
-    private fun DescriptionResponse.toSimpleDescription(): Description {
-        return Description(
-            id = id,
-            name = name,
-            image = image,
-            status = status,
-            species = species
-        )
-    }
+    private fun DescriptionResponse.toSimpleDescription() =
+        Description(id = id, name = name, image = image, status = status, species = species)
 
-    private fun LocationResponse.toSimpleLocation(): Location {
-        return Location(
-            name = name,
-            dimension = dimension
-        )
-    }
+    private fun LocationResponse.toSimpleLocation() =
+        Location(name = name, dimension = dimension)
 }

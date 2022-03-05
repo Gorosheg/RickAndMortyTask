@@ -1,4 +1,4 @@
-package gorosheg.myapplication
+package gorosheg.myapplication.navigator
 
 import androidx.fragment.app.FragmentActivity
 

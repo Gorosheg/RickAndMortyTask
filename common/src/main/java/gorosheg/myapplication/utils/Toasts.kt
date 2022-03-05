@@ -1,4 +1,4 @@
-package gorosheg.myapplication
+package gorosheg.myapplication.utils
 
 import android.content.Context
 import android.widget.Toast
