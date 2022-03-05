@@ -1,7 +1,6 @@
 package gorosheg.characters.domain
 
-import gorosheg.myapplication.Character
-import io.reactivex.Observable
+import gorosheg.myapplication.model.Character
 import io.reactivex.Single
 
 interface CharactersInteractor {

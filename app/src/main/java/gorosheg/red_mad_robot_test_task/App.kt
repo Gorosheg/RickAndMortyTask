@@ -2,6 +2,7 @@ package gorosheg.red_mad_robot_test_task
 
 import android.app.Application
 import gorosheg.characters.di.charactersModule
+import gorosheg.description.di.descriptionModule
 import gorosheg.network.networkModule
 import org.koin.core.context.startKoin
 
@@ -11,7 +12,7 @@ class App : Application() {
         super.onCreate()
 
         startKoin {
-            modules(appModule, charactersModule, networkModule)
+            modules(appModule, charactersModule, descriptionModule, networkModule)
         }
     }
 }

@@ -1,8 +1,7 @@
 package gorosheg.characters.data
 
-import gorosheg.myapplication.Character
+import gorosheg.myapplication.model.Character
 import gorosheg.network.NetworkDatasource
-import io.reactivex.Observable
 import io.reactivex.Single
 
 class CharactersRepositoryImpl(

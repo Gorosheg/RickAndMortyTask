@@ -1,6 +1,6 @@
-package gorosheg.characters.presentation
+package gorosheg.myapplication.model
 
-internal sealed class NetworkExceptions {
+sealed class NetworkExceptions {
 
     object NotFound : NetworkExceptions()
     object Unknown : NetworkExceptions()

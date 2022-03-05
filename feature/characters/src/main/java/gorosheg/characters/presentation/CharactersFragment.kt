@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import gorosheg.characters.R
 import gorosheg.characters.presentation.recicler.CharacterAdapter
-import gorosheg.myapplication.Character
+import gorosheg.myapplication.R.*
+import gorosheg.myapplication.model.Character
 import gorosheg.myapplication.showToast
+import gorosheg.myapplication.model.NetworkExceptions
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -57,11 +59,11 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
     private fun makeToast(throwable: NetworkExceptions) {
         when (throwable) {
             NetworkExceptions.NotFound -> {
-                showToast(getString(R.string.character_not_found))
+                showToast(getString(string.info_not_found))
             }
 
             NetworkExceptions.Unknown -> {
-                showToast(getString(R.string.unknown_error))
+                showToast(getString(string.unknown_error))
             }
         }
     }

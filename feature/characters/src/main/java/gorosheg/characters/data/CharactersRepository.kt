@@ -1,10 +1,9 @@
 package gorosheg.characters.data
 
-import gorosheg.myapplication.Character
-import io.reactivex.Observable
+import gorosheg.myapplication.model.Character
 import io.reactivex.Single
 
-interface CharactersRepository {
+internal interface CharactersRepository {
 
     fun loadCharacters(): Single<List<Character>>
 

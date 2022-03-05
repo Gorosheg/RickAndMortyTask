@@ -1,7 +1,7 @@
 package gorosheg.characters.presentation.recicler
 
 import androidx.recyclerview.widget.DiffUtil
-import gorosheg.myapplication.Character
+import gorosheg.myapplication.model.Character
 
 class CharactersDiffCallback(
     private val oldList: List<Character>,

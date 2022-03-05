@@ -1,6 +1,8 @@
 package gorosheg.network
 
-import gorosheg.network.model.RickAndMortyResponse
+import gorosheg.network.model.DescriptionResponse
+import gorosheg.network.model.CharactersResponse
+import gorosheg.network.model.LocationResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,20 +13,20 @@ internal interface CharactersApi {
     @GET("character/?")
     fun getAll(
         @Query("page") page: Int
-    ): Single<RickAndMortyResponse>
+    ): Single<CharactersResponse>
 
     @GET("character/{id}")
     fun getCharacter(
         @Path("id") id: Int
-    ): Single<RickAndMortyResponse>
+    ): Single<DescriptionResponse>
 
     @GET("location/{id}")
     fun getLocation(
         @Path("id") id: Int
-    ): Single<RickAndMortyResponse>
+    ): Single<LocationResponse>
 
     @GET("character/?")
     fun getEpisodes(
         @Query("name") name: String
-    ): Single<RickAndMortyResponse>
+    ): Single<CharactersResponse>
 }

@@ -3,7 +3,7 @@ package gorosheg.characters.presentation.recicler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import gorosheg.myapplication.Character
+import gorosheg.myapplication.model.Character
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import gorosheg.characters.R

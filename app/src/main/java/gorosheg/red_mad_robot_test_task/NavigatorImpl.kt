@@ -3,7 +3,7 @@ package gorosheg.red_mad_robot_test_task
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import gorosheg.characters.presentation.CharactersFragment
-import gorosheg.description.presentation.Description
+import gorosheg.description.presentation.DescriptionFragment
 
 private const val CHARACTERS = "CharacterScreen"
 private const val DESCRIPTION = "Description"
@@ -21,7 +21,7 @@ class NavigatorImpl : MainNavigator {
     }
 
     override fun navigateToDescriptionScreen(activity: FragmentActivity) {
-        val fragment = Description.newInstance()
+        val fragment = DescriptionFragment.newInstance()
         activity.navigateToDescriptionFragment(fragment)
     }
 

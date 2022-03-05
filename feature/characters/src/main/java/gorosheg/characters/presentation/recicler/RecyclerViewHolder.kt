@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import gorosheg.characters.R
-import gorosheg.myapplication.Character
+import gorosheg.myapplication.model.Character
 
 class RecyclerViewHolder(
     private val charView: View,

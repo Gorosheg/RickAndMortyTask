@@ -1,4 +1,4 @@
-package gorosheg.myapplication
+package gorosheg.myapplication.model
 
 class Character(
     val id: Int,
