@@ -21,6 +21,11 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
     private val rootView by lazy { requireNotNull(view) }
     private val disposable = CompositeDisposable()
     private val viewModel: DescriptionViewModel by viewModel()
+
+    private val characterId: Int by lazy {
+        arguments?.getSerializable(CHARACTER_KEY) as Int
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadDescription()
@@ -32,13 +37,13 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
     }
 
     private fun loadDescription() {
-        disposable += viewModel.loadDescription()
+        disposable += viewModel.loadDescription(characterId)
             .doOnSuccess {
                 handleDescription(it)
             }
             .subscribe()
 
-        disposable += viewModel.loadLocation()
+        disposable += viewModel.loadLocation(characterId)
             .doOnSuccess {
                 handleLocation(it)
             }
@@ -87,7 +92,13 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
 
     companion object {
 
-        fun newInstance() = DescriptionFragment()
+        private const val CHARACTER_KEY = "CHARACTER_KEY"
+
+        fun newInstance(charId: Int) = DescriptionFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(CHARACTER_KEY, charId)
+            }
+        }
 
     }
 }

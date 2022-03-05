@@ -6,8 +6,6 @@ interface MainNavigator {
 
     fun navigateToCharactersScreen(activity: FragmentActivity)
 
-    fun navigateToDescriptionScreen(activity: FragmentActivity)
-
     fun back(activity: FragmentActivity)
 
 }

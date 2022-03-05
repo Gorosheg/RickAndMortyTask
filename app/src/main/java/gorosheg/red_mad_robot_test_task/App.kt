@@ -12,7 +12,12 @@ class App : Application() {
         super.onCreate()
 
         startKoin {
-            modules(appModule, charactersModule, descriptionModule, networkModule)
+            modules(
+                appModule,
+                charactersModule,
+                descriptionModule,
+                networkModule
+            )
         }
     }
 }
