@@ -2,7 +2,8 @@ package gorosheg.myapplication.model
 
 import java.io.Serializable
 
-class Episodes(
+class Episode(
     val name: String,
-    val airDate: String
+    val airDate: String,
+
 ) : Serializable

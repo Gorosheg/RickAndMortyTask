@@ -23,7 +23,7 @@ import org.koin.core.parameter.parametersOf
 class DescriptionFragment : Fragment(R.layout.fragment_description) {
     private val rootView by lazy { requireNotNull(view) }
     private val disposable = CompositeDisposable()
-    private var episodes: List<Int> = emptyList()
+    private var charactersId: Int = 0
     private val navigator: DescriptionNavigator by inject()
 
     private val characterId: Int by lazy {
@@ -39,7 +39,7 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
         val openEpisodes: Button = rootView.findViewById(R.id.openEpisodes)
 
         openEpisodes.setOnClickListener {
-            navigateToEpisodesScreen(this.episodes)
+            navigateToEpisodesScreen(charactersId)
         }
     }
 
@@ -64,8 +64,8 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
             }
     }
 
-    private fun navigateToEpisodesScreen(episodes: List<Int>) {
-        navigator.navigateToEpisodesScreen(requireActivity(), episodes)
+    private fun navigateToEpisodesScreen(characterId: Int) {
+        navigator.navigateToEpisodesScreen(requireActivity(), characterId)
     }
 
     private fun handleDescription(description: Description) {
@@ -74,7 +74,7 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
         val species: TextView = rootView.findViewById(R.id.species)
         val status: TextView = rootView.findViewById(R.id.status)
 
-        episodes = description.episodes
+        charactersId = description.id
 
         Glide.with(rootView)
             .load(description.image)
@@ -96,9 +96,9 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
 
         private const val CHARACTER_KEY = "CHARACTER_KEY"
 
-        fun newInstance(charId: Int) = DescriptionFragment().apply {
+        fun newInstance(characterId: Int) = DescriptionFragment().apply {
             arguments = Bundle().apply {
-                putInt(CHARACTER_KEY, charId)
+                putInt(CHARACTER_KEY, characterId)
             }
         }
     }

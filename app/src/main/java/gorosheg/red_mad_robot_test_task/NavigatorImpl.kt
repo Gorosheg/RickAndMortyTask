@@ -29,8 +29,8 @@ class NavigatorImpl : MainNavigator, CharacterNavigator, DescriptionNavigator {
         activity.navigateToDescriptionFragment(fragment)
     }
 
-    override fun navigateToEpisodesScreen(activity: FragmentActivity, episodesList: List<Int>) {
-        val fragment = EpisodesFragment.newInstance(episodesList)
+    override fun navigateToEpisodesScreen(activity: FragmentActivity, characterId: Int) {
+        val fragment = EpisodesFragment.newInstance(characterId)
         activity.navigateToEpisodesFragment(fragment)
     }
 

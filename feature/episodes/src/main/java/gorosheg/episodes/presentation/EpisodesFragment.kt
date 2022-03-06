@@ -8,7 +8,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import gorosheg.episodes.R
 import gorosheg.episodes.presentation.recycler.EpisodesAdapter
 import gorosheg.myapplication.R.*
-import gorosheg.myapplication.model.Episodes
 import gorosheg.myapplication.utils.showToast
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -21,11 +20,11 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
     private val recyclerView: RecyclerView by lazy { rootView.findViewById(R.id.EpisodesList) }
     private val adapter: EpisodesAdapter by lazy { EpisodesAdapter() }
 
-    private val episodesList: List<Int> by lazy {
-        arguments?.getIntArray(EPISODES_KEY)?.toList()!!
+    private val characterId: Int by lazy {
+        arguments?.getInt(CHARACTERS_ID) as Int
     }
 
-    private val viewModel: EpisodesViewModel by viewModel { parametersOf(episodesList) }
+    private val viewModel: EpisodesViewModel by viewModel { parametersOf(characterId) }
     private val swipeRefresh: SwipeRefreshLayout by lazy { rootView.findViewById(R.id.charactersRefresh) }
     private val disposable = CompositeDisposable()
 
@@ -56,11 +55,11 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
 
     companion object {
 
-        private const val EPISODES_KEY = "EPISODES_KEY"
+        private const val CHARACTERS_ID = "CHARACTERS_ID"
 
-        fun newInstance(episodesList: List<Int>) = EpisodesFragment().apply {
+        fun newInstance(characterId: Int) = EpisodesFragment().apply {
             arguments = Bundle().apply {
-                putIntArray(EPISODES_KEY, episodesList.toIntArray())
+                putInt(CHARACTERS_ID, characterId)
             }
         }
     }

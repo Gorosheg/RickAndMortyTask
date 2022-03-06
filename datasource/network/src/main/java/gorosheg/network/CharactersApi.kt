@@ -2,7 +2,7 @@ package gorosheg.network
 
 import gorosheg.network.model.DescriptionResponse
 import gorosheg.network.model.CharactersResponse
-import gorosheg.network.model.Episode
+import gorosheg.network.model.EpisodesResponse
 import gorosheg.network.model.LocationResponse
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -20,6 +20,6 @@ internal interface CharactersApi {
     @GET("location/{id}")
     fun getLocation(@Path("id") id: Int): Single<LocationResponse>
 
-    @GET("episode/?")
-    fun getEpisodes(@Query("ids") listEpisodes: List<Int>): Single<Episode>
+    @GET("episode")
+    fun getEpisodes(): Single<EpisodesResponse>
 }

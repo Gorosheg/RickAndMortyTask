@@ -2,7 +2,7 @@ package gorosheg.network
 
 import gorosheg.myapplication.model.Character
 import gorosheg.myapplication.model.Description
-import gorosheg.myapplication.model.Episodes
+import gorosheg.myapplication.model.Episode
 import gorosheg.myapplication.model.Location
 import gorosheg.network.model.*
 import io.reactivex.Single
@@ -14,7 +14,7 @@ interface NetworkDatasource {
 
     fun getLocation(id: Int): Single<Location>
 
-    fun getEpisodes(listEpisodes: List<Int>): Single<List<Episodes>>
+    fun getEpisodes(id: Int): Single<List<Episode>>
 }
 
 internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDatasource {
@@ -31,9 +31,9 @@ internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDa
         return api.getLocation(id).map { it.toSimpleLocation() }
     }
 
-    override fun getEpisodes(listEpisodes: List<Int>): Single<List<Episodes>> {
-        return api.getEpisodes(listEpisodes).map {
-            it.toSimpleEpisodes()
+    override fun getEpisodes(id: Int): Single<List<Episode>> {
+        return api.getEpisodes().map {
+            it.toSimpleEpisodes(id)
         }
     }
 
@@ -44,27 +44,44 @@ internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDa
     }
 
     private fun DescriptionResponse.toSimpleDescription(): Description {
-        val episodesList = episodes.map {
-            it.substringAfter("https://rickandmortyapi.com/api/episode/").toInt()
-        }
 
         return Description(
             id = id,
             name = name,
             image = image,
             status = status,
-            species = species,
-            episodes = episodesList
+            species = species
         )
     }
-
 
     private fun LocationResponse.toSimpleLocation() =
         Location(name = name, dimension = dimension)
 
-    private fun Episode.toSimpleEpisodes(): List<Episodes> {
-        return results.map {
-            Episodes(name = it.name, airDate = it.airDate)
+    private fun EpisodesResponse.toSimpleEpisodes(id: Int): List<Episode> {
+        return episodes.filterByCharacterId(id)
+            .map { episodeResponse -> episodeResponse.toEpisode() }
+    }
+
+    private fun List<EpisodeResponse>.filterByCharacterId(id: Int): List<EpisodeResponse> {
+        return filter { episodeResponse ->
+            episodeResponse.characters.containsCharacterId(id)
         }
+    }
+
+    private fun List<String>.containsCharacterId(id: Int): Boolean {
+        return any { characterId ->
+            characterId.getCharacterId() == id
+        }
+    }
+
+    private fun String.getCharacterId(): Int {
+        return substringAfter("https://rickandmortyapi.com/api/character/").toInt()
+    }
+
+    private fun EpisodeResponse.toEpisode(): Episode {
+        return Episode(
+            name = name,
+            airDate = airDate,
+        )
     }
 }

@@ -1,11 +1,11 @@
 package gorosheg.episodes.presentation.recycler
 
 import androidx.recyclerview.widget.DiffUtil
-import gorosheg.myapplication.model.Episodes
+import gorosheg.myapplication.model.Episode
 
 class EpisodesDiffCallback(
-    private val oldList: List<Episodes>,
-    private val newList: List<Episodes>
+    private val oldList: List<Episode>,
+    private val newList: List<Episode>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

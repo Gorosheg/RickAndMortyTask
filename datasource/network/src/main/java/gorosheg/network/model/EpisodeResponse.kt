@@ -2,14 +2,16 @@ package gorosheg.network.model
 
 import com.google.gson.annotations.SerializedName
 
-internal class Episode(
+internal class EpisodesResponse(
     @SerializedName("results")
-    val results: List<EpisodeInfo>
+    val episodes: List<EpisodeResponse>
 )
 
-internal class EpisodeInfo(
+internal class EpisodeResponse(
     @SerializedName("name")
     val name: String,
     @SerializedName("air_date")
     val airDate: String,
+    @SerializedName("characters")
+    val characters: List<String>,
 )

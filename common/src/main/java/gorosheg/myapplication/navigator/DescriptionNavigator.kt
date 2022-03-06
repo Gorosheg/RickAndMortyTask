@@ -4,6 +4,6 @@ import androidx.fragment.app.FragmentActivity
 
 interface DescriptionNavigator {
 
-    fun navigateToEpisodesScreen(activity: FragmentActivity, episodesList: List<Int>)
+    fun navigateToEpisodesScreen(activity: FragmentActivity, characterId: Int)
 
 }

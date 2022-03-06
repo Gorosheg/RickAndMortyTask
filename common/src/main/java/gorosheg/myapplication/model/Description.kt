@@ -5,12 +5,11 @@ class Description(
     val name: String,
     val image: String,
     val status: String,
-    val species: String,
-    val episodes: List<Int>
+    val species: String
 ) {
 
     companion object {
 
-        fun empty() = Description(0, "", "", "", "", emptyList())
+        fun empty() = Description(0, "", "", "", "")
     }
 }

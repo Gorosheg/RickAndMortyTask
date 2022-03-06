@@ -2,7 +2,7 @@ package gorosheg.episodes.presentation
 
 import androidx.lifecycle.ViewModel
 import gorosheg.episodes.domain.EpisodesInteractor
-import gorosheg.myapplication.model.Episodes
+import gorosheg.myapplication.model.Episode
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,7 +14,7 @@ class EpisodesViewModel(private val interactor: EpisodesInteractor) : ViewModel(
     private val _error = PublishSubject.create<Throwable>()
     val error: Observable<Throwable> = _error
 
-    fun getEpisodes(): Single<List<Episodes>> {
+    fun getEpisodes(): Single<List<Episode>> {
         return interactor.getEpisodes()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
