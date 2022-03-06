@@ -21,5 +21,5 @@ internal interface CharactersApi {
     fun getLocation(@Path("id") id: Int): Single<LocationResponse>
 
     @GET("episode/?")
-    fun getEpisodes(@Query("ids") listEpisodes: List<String>): Single<List<Episode>>
+    fun getEpisodes(@Query("ids") listEpisodes: List<Int>): Single<Episode>
 }

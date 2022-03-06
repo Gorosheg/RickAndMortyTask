@@ -14,7 +14,7 @@ interface NetworkDatasource {
 
     fun getLocation(id: Int): Single<Location>
 
-    fun getEpisodes(listEpisodes: List<String>): Single<List<Episodes>>
+    fun getEpisodes(listEpisodes: List<Int>): Single<List<Episodes>>
 }
 
 internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDatasource {
@@ -31,8 +31,10 @@ internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDa
         return api.getLocation(id).map { it.toSimpleLocation() }
     }
 
-    override fun getEpisodes(listEpisodes: List<String>): Single<List<Episodes>> {
-        return api.getEpisodes(listEpisodes).map { it.toSimpleEpisodes() }
+    override fun getEpisodes(listEpisodes: List<Int>): Single<List<Episodes>> {
+        return api.getEpisodes(listEpisodes).map {
+            it.toSimpleEpisodes()
+        }
     }
 
     private fun CharactersResponse.toSimpleCharacter(): List<Character> {
@@ -43,7 +45,7 @@ internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDa
 
     private fun DescriptionResponse.toSimpleDescription(): Description {
         val episodesList = episodes.map {
-            it.substringAfter("https://rickandmortyapi.com/api/episode/")
+            it.substringAfter("https://rickandmortyapi.com/api/episode/").toInt()
         }
 
         return Description(
@@ -60,14 +62,9 @@ internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDa
     private fun LocationResponse.toSimpleLocation() =
         Location(name = name, dimension = dimension)
 
-    private fun List<Episode>.toSimpleEpisodes(): List<Episodes> {
-        return map { episode ->
-            Episodes(
-                name = episode.name,
-                airDate = episode.airDate
-            )
+    private fun Episode.toSimpleEpisodes(): List<Episodes> {
+        return results.map {
+            Episodes(name = it.name, airDate = it.airDate)
         }
     }
-
 }
-

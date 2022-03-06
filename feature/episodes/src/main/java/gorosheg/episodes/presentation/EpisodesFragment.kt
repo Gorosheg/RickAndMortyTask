@@ -21,8 +21,8 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
     private val recyclerView: RecyclerView by lazy { rootView.findViewById(R.id.EpisodesList) }
     private val adapter: EpisodesAdapter by lazy { EpisodesAdapter() }
 
-    private val episodesList: List<String> by lazy {
-        arguments?.getStringArray(EPISODES_KEY)?.toList()!!
+    private val episodesList: List<Int> by lazy {
+        arguments?.getIntArray(EPISODES_KEY)?.toList()!!
     }
 
     private val viewModel: EpisodesViewModel by viewModel { parametersOf(episodesList) }
@@ -58,9 +58,9 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
 
         private const val EPISODES_KEY = "EPISODES_KEY"
 
-        fun newInstance(episodesList: List<String>) = EpisodesFragment().apply {
+        fun newInstance(episodesList: List<Int>) = EpisodesFragment().apply {
             arguments = Bundle().apply {
-                putStringArray(EPISODES_KEY, episodesList.toTypedArray())
+                putIntArray(EPISODES_KEY, episodesList.toIntArray())
             }
         }
     }

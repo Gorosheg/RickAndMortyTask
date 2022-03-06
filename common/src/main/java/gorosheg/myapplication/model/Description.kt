@@ -6,7 +6,7 @@ class Description(
     val image: String,
     val status: String,
     val species: String,
-    val episodes: List<String>
+    val episodes: List<Int>
 ) {
 
     companion object {

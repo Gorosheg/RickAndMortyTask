@@ -5,10 +5,4 @@ import java.io.Serializable
 class Episodes(
     val name: String,
     val airDate: String
-): Serializable {
-
-    companion object {
-
-        fun empty() = Episodes("", "")
-    }
-}
+) : Serializable

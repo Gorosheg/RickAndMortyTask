@@ -6,7 +6,7 @@ import io.reactivex.Single
 
 class EpisodesRepositoryImpl(
     private val network: NetworkDatasource,
-    private val listEpisodes: List<String>
+    private val listEpisodes: List<Int>
 ) : EpisodesRepository {
 
     override fun loadEpisodes(): Single<List<Episodes>> {

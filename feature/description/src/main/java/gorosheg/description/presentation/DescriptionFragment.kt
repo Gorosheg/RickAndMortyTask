@@ -23,7 +23,7 @@ import org.koin.core.parameter.parametersOf
 class DescriptionFragment : Fragment(R.layout.fragment_description) {
     private val rootView by lazy { requireNotNull(view) }
     private val disposable = CompositeDisposable()
-    private var episodes: List<String> = emptyList()
+    private var episodes: List<Int> = emptyList()
     private val navigator: DescriptionNavigator by inject()
 
     private val characterId: Int by lazy {
@@ -64,7 +64,7 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
             }
     }
 
-    private fun navigateToEpisodesScreen(episodes: List<String>) {
+    private fun navigateToEpisodesScreen(episodes: List<Int>) {
         navigator.navigateToEpisodesScreen(requireActivity(), episodes)
     }
 
