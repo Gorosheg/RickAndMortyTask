@@ -9,6 +9,6 @@ class CharactersRepositoryImpl(
 ) : CharactersRepository {
 
     override fun loadCharacters(): Single<List<Character>> {
-        return network.loadCharacters()
+        return network.getCharacters()
     }
 }

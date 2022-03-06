@@ -12,5 +12,7 @@ class DescriptionResponse(
     @SerializedName("species")
     val species: String,
     @SerializedName("image")
-    val image: String
+    val image: String,
+    @SerializedName("episode")
+    val episodes: ArrayList<String>
 )

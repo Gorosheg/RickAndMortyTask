@@ -4,11 +4,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import gorosheg.characters.presentation.CharactersFragment
 import gorosheg.description.presentation.DescriptionFragment
+import gorosheg.episodes.presentation.EpisodesFragment
 import gorosheg.myapplication.navigator.CharacterNavigator
 import gorosheg.myapplication.navigator.DescriptionNavigator
 
 private const val CHARACTERS = "CharacterScreen"
 private const val DESCRIPTION = "Description"
+private const val EPISODES = "Episodes"
 
 class NavigatorImpl : MainNavigator, CharacterNavigator, DescriptionNavigator {
 
@@ -27,8 +29,9 @@ class NavigatorImpl : MainNavigator, CharacterNavigator, DescriptionNavigator {
         activity.navigateToDescriptionFragment(fragment)
     }
 
-    override fun navigateToEpisodesScreen(activity: FragmentActivity, characterId: Int) {
-
+    override fun navigateToEpisodesScreen(activity: FragmentActivity, episodesList: List<String>) {
+        val fragment = EpisodesFragment.newInstance(episodesList)
+        activity.navigateToEpisodesFragment(fragment)
     }
 
     override fun back(activity: FragmentActivity) {
@@ -39,6 +42,14 @@ class NavigatorImpl : MainNavigator, CharacterNavigator, DescriptionNavigator {
         supportFragmentManager.beginTransaction().run {
             add(R.id.fragmentHolder, fragment)
             addToBackStack(DESCRIPTION)
+            commit()
+        }
+    }
+
+    private fun FragmentActivity.navigateToEpisodesFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().run {
+            add(R.id.fragmentHolder, fragment)
+            addToBackStack(EPISODES)
             commit()
         }
     }

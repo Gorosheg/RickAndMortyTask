@@ -1,4 +1,4 @@
-package gorosheg.characters.presentation.recicler
+package gorosheg.characters.presentation.recycler
 
 import android.view.View
 import android.widget.ImageView

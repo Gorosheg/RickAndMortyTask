@@ -2,24 +2,24 @@ package gorosheg.network
 
 import gorosheg.myapplication.model.Character
 import gorosheg.myapplication.model.Description
+import gorosheg.myapplication.model.Episodes
 import gorosheg.myapplication.model.Location
-import gorosheg.network.model.DescriptionResponse
-import gorosheg.network.model.CharactersResponse
-import gorosheg.network.model.LocationResponse
+import gorosheg.network.model.*
 import io.reactivex.Single
 
 interface NetworkDatasource {
-    fun loadCharacters(): Single<List<Character>>
+    fun getCharacters(): Single<List<Character>>
 
     fun getDescription(id: Int): Single<Description>
 
     fun getLocation(id: Int): Single<Location>
 
+    fun getEpisodes(listEpisodes: List<String>): Single<List<Episodes>>
 }
 
 internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDatasource {
 
-    override fun loadCharacters(): Single<List<Character>> {
+    override fun getCharacters(): Single<List<Character>> {
         return api.getAll(1).map { it.toSimpleCharacter() }
     }
 
@@ -31,15 +31,43 @@ internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDa
         return api.getLocation(id).map { it.toSimpleLocation() }
     }
 
+    override fun getEpisodes(listEpisodes: List<String>): Single<List<Episodes>> {
+        return api.getEpisodes(listEpisodes).map { it.toSimpleEpisodes() }
+    }
+
     private fun CharactersResponse.toSimpleCharacter(): List<Character> {
         return description.map {
             Character(it.id, it.name, it.image)
         }
     }
 
-    private fun DescriptionResponse.toSimpleDescription() =
-        Description(id = id, name = name, image = image, status = status, species = species)
+    private fun DescriptionResponse.toSimpleDescription(): Description {
+        val episodesList = episodes.map {
+            it.substringAfter("https://rickandmortyapi.com/api/episode/")
+        }
+
+        return Description(
+            id = id,
+            name = name,
+            image = image,
+            status = status,
+            species = species,
+            episodes = episodesList
+        )
+    }
+
 
     private fun LocationResponse.toSimpleLocation() =
         Location(name = name, dimension = dimension)
+
+    private fun List<Episode>.toSimpleEpisodes(): List<Episodes> {
+        return map { episode ->
+            Episodes(
+                name = episode.name,
+                airDate = episode.airDate
+            )
+        }
+    }
+
 }
+

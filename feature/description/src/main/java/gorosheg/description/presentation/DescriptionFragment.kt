@@ -3,6 +3,7 @@ package gorosheg.description.presentation
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -11,16 +12,19 @@ import gorosheg.description.R
 import gorosheg.myapplication.R.*
 import gorosheg.myapplication.model.Description
 import gorosheg.myapplication.model.Location
+import gorosheg.myapplication.navigator.DescriptionNavigator
 import gorosheg.myapplication.utils.showToast
-import gorosheg.myapplication.model.NetworkExceptions
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class DescriptionFragment : Fragment(R.layout.fragment_description) {
     private val rootView by lazy { requireNotNull(view) }
     private val disposable = CompositeDisposable()
+    private var episodes: List<String> = emptyList()
+    private val navigator: DescriptionNavigator by inject()
 
     private val characterId: Int by lazy {
         arguments?.getInt(CHARACTER_KEY) as Int
@@ -31,6 +35,12 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadDescription()
+
+        val openEpisodes: Button = rootView.findViewById(R.id.openEpisodes)
+
+        openEpisodes.setOnClickListener {
+            navigateToEpisodesScreen(this.episodes)
+        }
     }
 
     override fun onDestroy() {
@@ -48,7 +58,14 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
             .subscribe()
 
         disposable += viewModel.error
-            .subscribe(::makeToast)
+            .subscribe {
+                it.printStackTrace()
+                showToast(getString(string.unknown_error))
+            }
+    }
+
+    private fun navigateToEpisodesScreen(episodes: List<String>) {
+        navigator.navigateToEpisodesScreen(requireActivity(), episodes)
     }
 
     private fun handleDescription(description: Description) {
@@ -56,6 +73,8 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
         val name: TextView = rootView.findViewById(R.id.name)
         val species: TextView = rootView.findViewById(R.id.species)
         val status: TextView = rootView.findViewById(R.id.status)
+
+        episodes = description.episodes
 
         Glide.with(rootView)
             .load(description.image)
@@ -71,18 +90,6 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
     private fun handleLocation(location: Location) {
         val locationView: TextView = rootView.findViewById(R.id.location)
         locationView.text = "${location.name}, ${location.dimension}"
-    }
-
-    private fun makeToast(throwable: NetworkExceptions) {
-        when (throwable) {
-            NetworkExceptions.NotFound -> {
-                showToast(getString(string.info_not_found))
-            }
-
-            NetworkExceptions.Unknown -> {
-                showToast(getString(string.unknown_error))
-            }
-        }
     }
 
     companion object {

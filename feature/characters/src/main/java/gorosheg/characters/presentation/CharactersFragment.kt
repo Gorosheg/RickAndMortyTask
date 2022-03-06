@@ -3,16 +3,14 @@ package gorosheg.characters.presentation
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import gorosheg.characters.R
-import gorosheg.characters.presentation.recicler.CharacterAdapter
+import gorosheg.characters.presentation.recycler.CharacterAdapter
 import gorosheg.myapplication.navigator.CharacterNavigator
 import gorosheg.myapplication.R.*
 import gorosheg.myapplication.model.Character
 import gorosheg.myapplication.utils.showToast
-import gorosheg.myapplication.model.NetworkExceptions
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.ext.android.inject
@@ -32,8 +30,8 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView.adapter = adapter
-        swipeRefresh.setOnRefreshListener { loadCharacters() }
-        loadCharacters()
+        swipeRefresh.setOnRefreshListener { getCharacters() }
+        getCharacters()
     }
 
     override fun onDestroy() {
@@ -45,27 +43,23 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         navigator.navigateToDescriptionScreen(requireActivity(), character.id)
     }
 
-    private fun loadCharacters() {
+    private fun getCharacters() {
         loaderChange(true)
 
         disposable += viewModel.loadCharacters()
             .subscribe { character -> adapter.items = character }
 
         disposable += viewModel.error
-            .subscribe(::makeToast)
+            .subscribe{
+                it.printStackTrace()
+                showToast(getString(string.unknown_error))
+            }
 
         loaderChange(false)
     }
 
     private fun loaderChange(isRefresh: Boolean) {
         swipeRefresh.isRefreshing = isRefresh
-    }
-
-    private fun makeToast(throwable: NetworkExceptions) {
-        when (throwable) {
-            NetworkExceptions.NotFound -> showToast(getString(string.info_not_found))
-            NetworkExceptions.Unknown -> showToast(getString(string.unknown_error))
-        }
     }
 
     companion object {

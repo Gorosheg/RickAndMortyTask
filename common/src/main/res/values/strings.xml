@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Common</string>
-    <string name="unknown_error">Something went wrong, please, check your Internet connection</string>
+    <string name="unknown_error">Something went wrong</string>
     <string name="info_not_found">Info is not found</string>
 </resources>

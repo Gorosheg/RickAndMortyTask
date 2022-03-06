@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="128dp"
+    android:layout_height="96dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
@@ -13,29 +13,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         tools:background="@color/white">
-
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="104dp"
-            android:layout_height="104dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp" />
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:textColor="@color/text_color"
-            android:textSize="24sp"
-            tools:text="Person" />
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/airDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="24sp" />
 
     </LinearLayout>
 

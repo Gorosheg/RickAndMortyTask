@@ -1,4 +1,4 @@
-package gorosheg.characters.presentation.recicler
+package gorosheg.characters.presentation.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 import gorosheg.myapplication.model.Character
@@ -13,14 +13,14 @@ class CharactersDiffCallback(
     override fun getNewListSize(): Int = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldChar = oldList[oldItemPosition]
-        val newChar = newList[newItemPosition]
-        return oldChar.id == newChar.id
+        val oldCharacter = oldList[oldItemPosition]
+        val newCharacter = newList[newItemPosition]
+        return oldCharacter.id == newCharacter.id
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldCity = oldList[oldItemPosition]
-        val newCity = newList[newItemPosition]
-        return oldCity == newCity
+        val oldCharacter = oldList[oldItemPosition]
+        val newCharacter = newList[newItemPosition]
+        return oldCharacter == newCharacter
     }
 }

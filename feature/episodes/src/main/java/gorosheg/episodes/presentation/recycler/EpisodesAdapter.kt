@@ -1,27 +1,25 @@
-package gorosheg.characters.presentation.recicler//typo
+package gorosheg.episodes.presentation.recycler
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import gorosheg.characters.R
-import gorosheg.myapplication.model.Character
+import gorosheg.episodes.R
+import gorosheg.myapplication.model.Episodes
 import gorosheg.myapplication.utils.inflate
 
-internal class CharacterAdapter(
-    private val onCharClick: (Character) -> Unit
-) : RecyclerView.Adapter<RecyclerViewHolder>() {
+internal class EpisodesAdapter() : RecyclerView.Adapter<RecyclerViewHolder>() {
 
-    var items: List<Character> = emptyList()
+    var items: List<Episodes> = emptyList()
         set(value) {
-            val diffResult = DiffUtil.calculateDiff(CharactersDiffCallback(items, value))
+            val diffResult = DiffUtil.calculateDiff(EpisodesDiffCallback(items, value))
             field = value
             diffResult.dispatchUpdatesTo(this)
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        val view: View = parent.inflate(R.layout.list_of_characters)
-        return RecyclerViewHolder(view, onCharClick)
+        val view: View = parent.inflate(R.layout.list_of_episodes)
+        return RecyclerViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
