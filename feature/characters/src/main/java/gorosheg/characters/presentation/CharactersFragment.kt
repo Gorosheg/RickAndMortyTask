@@ -48,14 +48,12 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         disposable += viewModel.success
             .subscribe { character ->
                 adapter.items = character
-                loaderIsActive(false)
             }
 
         disposable += viewModel.error
             .subscribe {
                 it.printStackTrace()
                 showToast(getString(string.unknown_error))
-                loaderIsActive(false)
             }
     }
 

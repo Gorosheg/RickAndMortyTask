@@ -38,13 +38,16 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         toolbar.setNavigationOnClickListener {
             navigator.back(requireActivity())
         }
+
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-
         swipeRefresh.setOnRefreshListener { getEpisodes() }
+
+        subscribeOnViewModel()
         getEpisodes()
     }
 
@@ -53,9 +56,9 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
         disposable.dispose()
     }
 
-    private fun getEpisodes() {
+    private fun subscribeOnViewModel() {
 
-        disposable += viewModel.getEpisodes()
+        disposable += viewModel.success
             .subscribe { character -> adapter.items = character }
 
         disposable += viewModel.error
@@ -63,6 +66,16 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
                 it.printStackTrace()
                 showToast(getString(string.unknown_error))
             }
+    }
+
+    private fun getEpisodes() {
+        loaderIsActive(true)
+        viewModel.getEpisodes()
+        loaderIsActive(false)
+    }
+
+    private fun loaderIsActive(isActive: Boolean) {
+        swipeRefresh.isRefreshing = isActive
     }
 
     companion object {
