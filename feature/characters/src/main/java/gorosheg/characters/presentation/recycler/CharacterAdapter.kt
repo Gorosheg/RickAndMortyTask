@@ -10,7 +10,7 @@ import gorosheg.myapplication.utils.inflate
 
 internal class CharacterAdapter(
     private val onCharClick: (Character) -> Unit
-) : RecyclerView.Adapter<RecyclerViewHolder>() {
+) : RecyclerView.Adapter<CharactersRecyclerViewHolder>() {
 
     var items: List<Character> = emptyList()
         set(value) {
@@ -19,12 +19,12 @@ internal class CharacterAdapter(
             diffResult.dispatchUpdatesTo(this)
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersRecyclerViewHolder {
         val view: View = parent.inflate(R.layout.list_of_characters)
-        return RecyclerViewHolder(view, onCharClick)
+        return CharactersRecyclerViewHolder(view, onCharClick)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CharactersRecyclerViewHolder, position: Int) {
         holder.bind(items[position])
     }
 

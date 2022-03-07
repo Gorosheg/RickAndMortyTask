@@ -9,5 +9,4 @@ class Location(
 
         fun empty() = Location("", "")
     }
-
 }

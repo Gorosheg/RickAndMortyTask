@@ -26,19 +26,7 @@ internal class CharactersViewModel(private val interactor: CharactersInteractor)
     init {
         disposable += pageSubject.distinctUntilChanged()
             .flatMap { page ->
-                interactor.loadCharacters(page)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess {
-                        if (page == 1) {
-                            _success.onNext(it)
-                        } else {
-                            _success.onNext(_success.value!! + it)
-                        }
-                    }
-                    .doOnError(_error::onNext)
-                    .onErrorReturn { emptyList() }
-                    .toObservable()
+                subscribeOnCharacters(page)
             }
             .subscribe()
     }
@@ -48,7 +36,25 @@ internal class CharactersViewModel(private val interactor: CharactersInteractor)
         disposable.dispose()
     }
 
-    fun loadCharacters(page: Int) {
+    private fun subscribeOnCharacters(page: Int) = interactor.getCharacters(page)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnSuccess {
+            getData(page, it)
+        }
+        .doOnError(_error::onNext)
+        .onErrorReturn { emptyList() }
+        .toObservable()
+
+    private fun getData(page: Int, it: List<Character>) {
+        if (page == 1) {
+            _success.onNext(it)
+        } else {
+            _success.onNext(_success.value!! + it)
+        }
+    }
+
+    fun getCharacters(page: Int) {
         pageSubject.onNext(page)
     }
 }

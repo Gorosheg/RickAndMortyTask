@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import gorosheg.characters.R
 import gorosheg.myapplication.model.Character
 
-class RecyclerViewHolder(
+internal class CharactersRecyclerViewHolder(
     private val charView: View,
     private val onCharClick: (Character) -> Unit
 ) : RecyclerView.ViewHolder(charView) {
@@ -30,7 +30,5 @@ class RecyclerViewHolder(
         Glide.with(charView)
             .load(character.image)
             .into(characterPhoto)
-
-        characterPhoto.clipToOutline = true
     }
 }

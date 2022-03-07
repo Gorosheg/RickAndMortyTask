@@ -18,6 +18,6 @@ val episodeModule = module {
     }
 
     factory<EpisodesRepository> { params ->
-        EpisodesRepositoryImpl(network = get(), params.get())
+        EpisodesRepositoryImpl(get(), params.get())
     }
 }

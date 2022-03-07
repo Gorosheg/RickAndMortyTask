@@ -6,8 +6,7 @@ import io.reactivex.Single
 
 internal class CharactersInteractorImpl(private val repository: CharactersRepository) : CharactersInteractor {
 
-    override fun loadCharacters(page: Int): Single<List<Character>> {
-        return repository.loadCharacters(page)
+    override fun getCharacters(page: Int): Single<List<Character>> {
+        return repository.getCharacters(page)
     }
-
 }

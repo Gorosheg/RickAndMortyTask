@@ -5,5 +5,4 @@ import androidx.fragment.app.FragmentActivity
 interface MainNavigator {
 
     fun navigateToCharactersScreen(activity: FragmentActivity)
-
 }

@@ -5,6 +5,5 @@ import io.reactivex.Single
 
 internal interface CharactersRepository {
 
-    fun loadCharacters(page: Int): Single<List<Character>>
-
+    fun getCharacters(page: Int): Single<List<Character>>
 }

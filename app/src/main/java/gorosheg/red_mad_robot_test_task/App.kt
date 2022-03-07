@@ -14,7 +14,7 @@ class App : Application() {
 
         startKoin {
             modules(
-                appModule,
+                navigatorModule,
                 charactersModule,
                 descriptionModule,
                 episodeModule,

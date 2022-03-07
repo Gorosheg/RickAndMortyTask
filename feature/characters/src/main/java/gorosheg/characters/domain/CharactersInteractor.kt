@@ -3,8 +3,7 @@ package gorosheg.characters.domain
 import gorosheg.myapplication.model.Character
 import io.reactivex.Single
 
-interface CharactersInteractor {
+internal interface CharactersInteractor {
 
-    fun loadCharacters(page: Int): Single<List<Character>>
-
+    fun getCharacters(page: Int): Single<List<Character>>
 }

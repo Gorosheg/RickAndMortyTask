@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import gorosheg.episodes.R
 import gorosheg.myapplication.model.Episode
 
-class RecyclerViewHolder(charView: View) : RecyclerView.ViewHolder(charView) {
+internal class EpisodesRecyclerViewHolder(charView: View) : RecyclerView.ViewHolder(charView) {
 
     private val episodeName: TextView = charView.findViewById(R.id.name)
     private val airDate: TextView = charView.findViewById(R.id.airDate)

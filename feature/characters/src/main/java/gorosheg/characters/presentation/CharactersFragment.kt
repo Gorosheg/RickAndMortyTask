@@ -24,6 +24,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
     private val adapter: CharacterAdapter by lazy { CharacterAdapter(::navigateToDescriptionScreen) }
     private val viewModel: CharactersViewModel by viewModel()
     private val swipeRefresh: SwipeRefreshLayout by lazy { rootView.findViewById(R.id.charactersRefresh) }
+
     private val disposable = CompositeDisposable()
     private val navigator: CharacterNavigator by inject()
 
@@ -63,7 +64,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
     private fun getCharacters(page: Int) {
         loaderIsActive(true)
-        viewModel.loadCharacters(page)
+        viewModel.getCharacters(page)
         loaderIsActive(false)
     }
 

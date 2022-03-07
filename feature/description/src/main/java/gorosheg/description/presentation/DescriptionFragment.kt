@@ -16,6 +16,7 @@ import gorosheg.myapplication.model.Description
 import gorosheg.myapplication.model.Location
 import gorosheg.myapplication.navigator.DescriptionNavigator
 import gorosheg.myapplication.utils.showToast
+import gorosheg.myapplication.utils.toolbarSettings
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.ext.android.inject
@@ -23,32 +24,27 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class DescriptionFragment : Fragment(R.layout.fragment_description) {
+
     private val rootView by lazy { requireNotNull(view) }
+    private val viewModel: DescriptionViewModel by viewModel { parametersOf(characterId) }
+
     private val disposable = CompositeDisposable()
-    private var charactersId: Int = 0
     private val navigator: DescriptionNavigator by inject()
+
+    private val openEpisodes: Button by lazy { rootView.findViewById(R.id.openEpisodes) }
 
     private val characterId: Int by lazy {
         arguments?.getInt(CHARACTER_KEY) as Int
     }
 
-    private val viewModel: DescriptionViewModel by viewModel { parametersOf(characterId) }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val openEpisodes: Button = rootView.findViewById(R.id.openEpisodes)
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        toolbar.setNavigationOnClickListener {
-            navigator.back(requireActivity())
-        }
+        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
 
-        loadDescription()
+        toolbar.toolbarSettings(activity as AppCompatActivity, false, navigator::back)
 
-        openEpisodes.setOnClickListener {
-            navigateToEpisodesScreen(charactersId)
-        }
+        subscribeOnViewModel()
+        getData()
     }
 
     override fun onDestroy() {
@@ -56,14 +52,12 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
         disposable.dispose()
     }
 
-    private fun loadDescription() {
-        disposable += viewModel.loadDescription()
-            .doOnSuccess(::handleDescription)
-            .subscribe()
+    private fun subscribeOnViewModel() {
+        disposable += viewModel.description
+            .subscribe(::handleDescription)
 
-        disposable += viewModel.loadLocation()
-            .doOnSuccess(::handleLocation)
-            .subscribe()
+        disposable += viewModel.location
+            .subscribe(::handleLocation)
 
         disposable += viewModel.error
             .subscribe {
@@ -72,8 +66,9 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
             }
     }
 
-    private fun navigateToEpisodesScreen(characterId: Int) {
-        navigator.navigateToEpisodesScreen(requireActivity(), characterId)
+    private fun getData() {
+        viewModel.getDescription()
+        viewModel.getLocation()
     }
 
     @SuppressLint("SetTextI18n")
@@ -83,22 +78,28 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
         val species: TextView = rootView.findViewById(R.id.species)
         val status: TextView = rootView.findViewById(R.id.status)
 
-        charactersId = description.id
+        openEpisodes.setOnClickListener {
+            navigateToEpisodesScreen(characterId)
+        }
 
         Glide.with(rootView)
             .load(description.image)
             .into(photo)
 
         photo.clipToOutline = true
-        name.text = "Name: ${description.name}"
-        species.text = "Species: ${description.species}"
-        status.text = "Status: ${description.status}"
+        name.text = getString(string.char_name, description.name)
+        species.text = getString(string.char_species, description.species)
+        status.text = getString(string.char_status, description.status)
     }
 
     @SuppressLint("SetTextI18n")
     private fun handleLocation(location: Location) {
         val locationView: TextView = rootView.findViewById(R.id.location)
-        locationView.text = "Location: ${location.name}, \n${location.dimension}"
+        locationView.text = getString(string.char_location, location.name, location.dimension)
+    }
+
+    private fun navigateToEpisodesScreen(characterId: Int) {
+        navigator.navigateToEpisodesScreen(requireActivity(), characterId)
     }
 
     companion object {

@@ -3,7 +3,7 @@ package gorosheg.episodes.presentation.recycler
 import androidx.recyclerview.widget.DiffUtil
 import gorosheg.myapplication.model.Episode
 
-class EpisodesDiffCallback(
+internal class EpisodesDiffCallback(
     private val oldList: List<Episode>,
     private val newList: List<Episode>
 ) : DiffUtil.Callback() {

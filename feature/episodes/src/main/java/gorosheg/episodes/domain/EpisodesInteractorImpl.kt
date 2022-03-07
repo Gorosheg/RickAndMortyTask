@@ -7,7 +7,6 @@ import io.reactivex.Single
 internal class EpisodesInteractorImpl(private val repository: EpisodesRepository) : EpisodesInteractor {
 
     override fun getEpisodes(): Single<List<Episode>> {
-        return repository.loadEpisodes()
+        return repository.getEpisodes()
     }
-
 }

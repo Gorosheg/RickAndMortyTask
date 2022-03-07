@@ -2,7 +2,7 @@ package gorosheg.network.model
 
 import com.google.gson.annotations.SerializedName
 
-class DescriptionResponse(
+internal class DescriptionResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")

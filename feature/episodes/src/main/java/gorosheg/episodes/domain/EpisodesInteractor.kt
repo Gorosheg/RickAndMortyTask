@@ -6,5 +6,4 @@ import io.reactivex.Single
 interface EpisodesInteractor {
 
     fun getEpisodes(): Single<List<Episode>>
-
 }

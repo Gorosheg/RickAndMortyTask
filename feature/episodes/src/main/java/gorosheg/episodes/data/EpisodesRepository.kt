@@ -5,6 +5,5 @@ import io.reactivex.Single
 
 internal interface EpisodesRepository {
 
-    fun loadEpisodes(): Single<List<Episode>>
-
+    fun getEpisodes(): Single<List<Episode>>
 }

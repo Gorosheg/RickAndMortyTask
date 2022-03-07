@@ -4,12 +4,12 @@ import gorosheg.myapplication.model.Episode
 import gorosheg.network.NetworkDatasource
 import io.reactivex.Single
 
-class EpisodesRepositoryImpl(
+internal class EpisodesRepositoryImpl(
     private val network: NetworkDatasource,
     private val CharacterId: Int
 ) : EpisodesRepository {
 
-    override fun loadEpisodes(): Single<List<Episode>> {
+    override fun getEpisodes(): Single<List<Episode>> {
         return network.getEpisodes(CharacterId)
     }
 }

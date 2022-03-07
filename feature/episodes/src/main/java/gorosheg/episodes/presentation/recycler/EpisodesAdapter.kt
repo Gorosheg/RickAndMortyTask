@@ -8,7 +8,7 @@ import gorosheg.episodes.R
 import gorosheg.myapplication.model.Episode
 import gorosheg.myapplication.utils.inflate
 
-internal class EpisodesAdapter() : RecyclerView.Adapter<RecyclerViewHolder>() {
+internal class EpisodesAdapter : RecyclerView.Adapter<EpisodesRecyclerViewHolder>() {
 
     var items: List<Episode> = emptyList()
         set(value) {
@@ -17,12 +17,12 @@ internal class EpisodesAdapter() : RecyclerView.Adapter<RecyclerViewHolder>() {
             diffResult.dispatchUpdatesTo(this)
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodesRecyclerViewHolder {
         val view: View = parent.inflate(R.layout.list_of_episodes)
-        return RecyclerViewHolder(view)
+        return EpisodesRecyclerViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EpisodesRecyclerViewHolder, position: Int) {
         holder.bind(items[position])
     }
 

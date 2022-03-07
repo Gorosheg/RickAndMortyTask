@@ -10,16 +10,14 @@ import org.koin.dsl.module
 
 val charactersModule = module {
     viewModel {
-        CharactersViewModel(
-            interactor = get()
-        )
+        CharactersViewModel(get())
     }
 
     factory<CharactersInteractor> {
-        CharactersInteractorImpl(repository = get())
+        CharactersInteractorImpl(get())
     }
 
     factory<CharactersRepository> {
-        CharactersRepositoryImpl(network = get())
+        CharactersRepositoryImpl(get())
     }
 }

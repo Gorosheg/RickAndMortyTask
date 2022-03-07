@@ -13,6 +13,7 @@ import gorosheg.episodes.presentation.recycler.EpisodesAdapter
 import gorosheg.myapplication.R.*
 import gorosheg.myapplication.navigator.EpisodesNavigator
 import gorosheg.myapplication.utils.showToast
+import gorosheg.myapplication.utils.toolbarSettings
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.ext.android.inject
@@ -24,24 +25,22 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
     private val rootView by lazy { requireNotNull(view) }
     private val recyclerView: RecyclerView by lazy { rootView.findViewById(R.id.EpisodesList) }
     private val adapter: EpisodesAdapter by lazy { EpisodesAdapter() }
-    private val navigator: EpisodesNavigator by inject()
+    private val viewModel: EpisodesViewModel by viewModel { parametersOf(characterId) }
+    private val swipeRefresh: SwipeRefreshLayout by lazy { rootView.findViewById(R.id.charactersRefresh) }
+
     private val disposable = CompositeDisposable()
+    private val navigator: EpisodesNavigator by inject()
 
     private val characterId: Int by lazy {
         arguments?.getInt(CHARACTERS_ID) as Int
     }
-    private val viewModel: EpisodesViewModel by viewModel { parametersOf(characterId) }
-    private val swipeRefresh: SwipeRefreshLayout by lazy { rootView.findViewById(R.id.charactersRefresh) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        toolbar.setNavigationOnClickListener {
-            navigator.back(requireActivity())
-        }
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+
+        toolbar.toolbarSettings(activity as AppCompatActivity, false, navigator::back)
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -58,7 +57,7 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
 
     private fun subscribeOnViewModel() {
 
-        disposable += viewModel.success
+        disposable += viewModel.episodes
             .subscribe { character -> adapter.items = character }
 
         disposable += viewModel.error
@@ -88,5 +87,4 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
             }
         }
     }
-
 }

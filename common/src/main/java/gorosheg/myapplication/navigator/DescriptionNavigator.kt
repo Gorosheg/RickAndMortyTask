@@ -7,5 +7,4 @@ interface DescriptionNavigator {
     fun navigateToEpisodesScreen(activity: FragmentActivity, characterId: Int)
 
     fun back(activity: FragmentActivity)
-
 }
