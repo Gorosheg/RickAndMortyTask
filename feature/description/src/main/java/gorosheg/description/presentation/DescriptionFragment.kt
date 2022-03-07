@@ -76,6 +76,7 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
         navigator.navigateToEpisodesScreen(requireActivity(), characterId)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun handleDescription(description: Description) {
         val photo: ImageView = rootView.findViewById(R.id.photo)
         val name: TextView = rootView.findViewById(R.id.name)
@@ -89,15 +90,15 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
             .into(photo)
 
         photo.clipToOutline = true
-        name.text = description.name
-        species.text = description.species
-        status.text = description.status
+        name.text = "Name: ${description.name}"
+        species.text = "Species: ${description.species}"
+        status.text = "Status: ${description.status}"
     }
 
     @SuppressLint("SetTextI18n")
     private fun handleLocation(location: Location) {
         val locationView: TextView = rootView.findViewById(R.id.location)
-        locationView.text = "${location.name}, ${location.dimension}"
+        locationView.text = "Location: ${location.name}, \n${location.dimension}"
     }
 
     companion object {

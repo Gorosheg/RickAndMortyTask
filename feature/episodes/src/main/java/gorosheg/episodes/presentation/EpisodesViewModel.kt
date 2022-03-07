@@ -2,10 +2,8 @@ package gorosheg.episodes.presentation
 
 import androidx.lifecycle.ViewModel
 import gorosheg.episodes.domain.EpisodesInteractor
-import gorosheg.myapplication.model.Character
 import gorosheg.myapplication.model.Episode
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign

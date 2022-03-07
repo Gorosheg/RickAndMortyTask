@@ -16,42 +16,29 @@ private const val EPISODES = "Episodes"
 class NavigatorImpl : MainNavigator, CharacterNavigator, DescriptionNavigator, EpisodesNavigator {
 
     override fun navigateToCharactersScreen(activity: FragmentActivity) {
-        val charactersFragment = CharactersFragment.newInstance()
-
-        activity.supportFragmentManager
-            .beginTransaction()
-            .add(R.id.fragmentHolder, charactersFragment)
-            .addToBackStack(CHARACTERS)
-            .commit()
+        val fragment = CharactersFragment.newInstance()
+        activity.navigateToNextFragment(fragment, CHARACTERS)
     }
 
     override fun navigateToDescriptionScreen(activity: FragmentActivity, characterId: Int) {
         val fragment = DescriptionFragment.newInstance(characterId)
-        activity.navigateToDescriptionFragment(fragment)
+        activity.navigateToNextFragment(fragment, DESCRIPTION)
     }
 
     override fun navigateToEpisodesScreen(activity: FragmentActivity, characterId: Int) {
         val fragment = EpisodesFragment.newInstance(characterId)
-        activity.navigateToEpisodesFragment(fragment)
+        activity.navigateToNextFragment(fragment, EPISODES)
+    }
+
+    private fun FragmentActivity.navigateToNextFragment(fragment: Fragment, fragmentKey: String) {
+        supportFragmentManager.beginTransaction().run {
+            add(R.id.fragmentHolder, fragment)
+            addToBackStack(fragmentKey)
+            commit()
+        }
     }
 
     override fun back(activity: FragmentActivity) {
         activity.supportFragmentManager.popBackStack()
-    }
-
-    private fun FragmentActivity.navigateToDescriptionFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().run {
-            add(R.id.fragmentHolder, fragment)
-            addToBackStack(DESCRIPTION)
-            commit()
-        }
-    }
-
-    private fun FragmentActivity.navigateToEpisodesFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().run {
-            add(R.id.fragmentHolder, fragment)
-            addToBackStack(EPISODES)
-            commit()
-        }
     }
 }
