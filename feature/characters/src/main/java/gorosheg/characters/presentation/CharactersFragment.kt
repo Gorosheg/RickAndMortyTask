@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import gorosheg.characters.R
 import gorosheg.characters.presentation.recycler.CharacterAdapter
+import gorosheg.characters.presentation.recycler.recyclerViewListener
 import gorosheg.myapplication.navigator.CharacterNavigator
 import gorosheg.myapplication.R.*
 import gorosheg.myapplication.model.Character
@@ -30,8 +31,12 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView.adapter = adapter
-        swipeRefresh.setOnRefreshListener { getCharacters() }
-        getCharacters()
+        swipeRefresh.setOnRefreshListener { getCharacters(1) }
+        getCharacters(1)
+
+        subscribeToViewModel()
+
+        recyclerView.recyclerViewListener(::getCharacters)
     }
 
     override fun onDestroy() {
@@ -39,27 +44,33 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         disposable.dispose()
     }
 
+    private fun subscribeToViewModel() {
+        disposable += viewModel.success
+            .subscribe { character ->
+                adapter.items = character
+                loaderIsActive(false)
+            }
+
+        disposable += viewModel.error
+            .subscribe {
+                it.printStackTrace()
+                showToast(getString(string.unknown_error))
+                loaderIsActive(false)
+            }
+    }
+
     private fun navigateToDescriptionScreen(character: Character) {
         navigator.navigateToDescriptionScreen(requireActivity(), character.id)
     }
 
-    private fun getCharacters() {
-        loaderChange(true)
-
-        disposable += viewModel.loadCharacters()
-            .subscribe { character -> adapter.items = character }
-
-        disposable += viewModel.error
-            .subscribe{
-                it.printStackTrace()
-                showToast(getString(string.unknown_error))
-            }
-
-        loaderChange(false)
+    private fun getCharacters(page: Int) {
+        loaderIsActive(true)
+        viewModel.loadCharacters(page)
+        loaderIsActive(false)
     }
 
-    private fun loaderChange(isRefresh: Boolean) {
-        swipeRefresh.isRefreshing = isRefresh
+    private fun loaderIsActive(isActive: Boolean) {
+        swipeRefresh.isRefreshing = isActive
     }
 
     companion object {

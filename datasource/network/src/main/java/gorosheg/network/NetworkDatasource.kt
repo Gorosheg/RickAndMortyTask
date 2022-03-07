@@ -8,7 +8,7 @@ import gorosheg.network.model.*
 import io.reactivex.Single
 
 interface NetworkDatasource {
-    fun getCharacters(): Single<List<Character>>
+    fun getCharacters(page: Int): Single<List<Character>>
 
     fun getDescription(id: Int): Single<Description>
 
@@ -19,8 +19,8 @@ interface NetworkDatasource {
 
 internal class NetworkDatasourceImpl(private val api: CharactersApi) : NetworkDatasource {
 
-    override fun getCharacters(): Single<List<Character>> {
-        return api.getAll(1).map { it.toSimpleCharacter() }
+    override fun getCharacters(page: Int): Single<List<Character>> {
+        return api.getAll(page).map { it.toSimpleCharacter() }
     }
 
     override fun getDescription(id: Int): Single<Description> {

@@ -5,12 +5,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import gorosheg.episodes.R
 import gorosheg.episodes.presentation.recycler.EpisodesAdapter
 import gorosheg.myapplication.R.*
-import gorosheg.myapplication.navigator.DescriptionNavigator
 import gorosheg.myapplication.navigator.EpisodesNavigator
 import gorosheg.myapplication.utils.showToast
 import io.reactivex.disposables.CompositeDisposable
@@ -42,6 +42,8 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
             navigator.back(requireActivity())
         }
         recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
         swipeRefresh.setOnRefreshListener { getEpisodes() }
         getEpisodes()
     }

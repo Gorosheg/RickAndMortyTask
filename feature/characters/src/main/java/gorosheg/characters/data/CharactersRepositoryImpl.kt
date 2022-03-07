@@ -8,7 +8,7 @@ class CharactersRepositoryImpl(
     private val network: NetworkDatasource
 ) : CharactersRepository {
 
-    override fun loadCharacters(): Single<List<Character>> {
-        return network.getCharacters()
+    override fun loadCharacters(page: Int): Single<List<Character>> {
+        return network.getCharacters(page)
     }
 }

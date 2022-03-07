@@ -5,6 +5,6 @@ import io.reactivex.Single
 
 interface CharactersInteractor {
 
-    fun loadCharacters(): Single<List<Character>>
+    fun loadCharacters(page: Int): Single<List<Character>>
 
 }
