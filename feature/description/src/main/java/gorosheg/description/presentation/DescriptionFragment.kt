@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import gorosheg.description.R
@@ -34,9 +36,15 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadDescription()
-
         val openEpisodes: Button = rootView.findViewById(R.id.openEpisodes)
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener {
+            navigator.back(requireActivity())
+        }
+
+        loadDescription()
 
         openEpisodes.setOnClickListener {
             navigateToEpisodesScreen(charactersId)

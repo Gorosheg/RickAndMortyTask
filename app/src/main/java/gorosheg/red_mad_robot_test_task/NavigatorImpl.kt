@@ -7,12 +7,13 @@ import gorosheg.description.presentation.DescriptionFragment
 import gorosheg.episodes.presentation.EpisodesFragment
 import gorosheg.myapplication.navigator.CharacterNavigator
 import gorosheg.myapplication.navigator.DescriptionNavigator
+import gorosheg.myapplication.navigator.EpisodesNavigator
 
 private const val CHARACTERS = "CharacterScreen"
 private const val DESCRIPTION = "Description"
 private const val EPISODES = "Episodes"
 
-class NavigatorImpl : MainNavigator, CharacterNavigator, DescriptionNavigator {
+class NavigatorImpl : MainNavigator, CharacterNavigator, DescriptionNavigator, EpisodesNavigator {
 
     override fun navigateToCharactersScreen(activity: FragmentActivity) {
         val charactersFragment = CharactersFragment.newInstance()
