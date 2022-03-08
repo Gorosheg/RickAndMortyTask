@@ -5,11 +5,11 @@ import androidx.appcompat.widget.Toolbar
 
 fun Toolbar.toolbarSettings(
     activity: AppCompatActivity,
-    homeIcon: Boolean,
+    isBackArrowEnabled: Boolean,
     callback: (AppCompatActivity) -> Unit
 ) {
     activity.setSupportActionBar(this)
-    activity.supportActionBar?.setDisplayHomeAsUpEnabled(homeIcon)
+    activity.supportActionBar?.setDisplayHomeAsUpEnabled(isBackArrowEnabled)
 
     setNavigationOnClickListener {
         callback.invoke(activity)

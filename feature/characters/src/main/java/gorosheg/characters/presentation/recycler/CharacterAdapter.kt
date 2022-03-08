@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import gorosheg.characters.R
 import gorosheg.myapplication.model.Character
+import gorosheg.myapplication.utils.ItemsDiffCallback
 import gorosheg.myapplication.utils.inflate
 
 internal class CharacterAdapter(
@@ -14,7 +15,7 @@ internal class CharacterAdapter(
 
     var items: List<Character> = emptyList()
         set(value) {
-            val diffResult = DiffUtil.calculateDiff(CharactersDiffCallback(items, value))
+            val diffResult = DiffUtil.calculateDiff(ItemsDiffCallback(items, value))
             field = value
             diffResult.dispatchUpdatesTo(this)
         }

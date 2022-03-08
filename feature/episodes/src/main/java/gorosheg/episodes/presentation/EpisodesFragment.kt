@@ -40,7 +40,11 @@ class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
 
-        toolbar.toolbarSettings(activity as AppCompatActivity, false, navigator::back)
+        toolbar.toolbarSettings(
+            activity = activity as AppCompatActivity,
+            isBackArrowEnabled = true,
+            callback = navigator::back
+        )
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)

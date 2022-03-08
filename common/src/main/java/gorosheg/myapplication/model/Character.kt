@@ -2,8 +2,8 @@ package gorosheg.myapplication.model
 
 import java.io.Serializable
 
-class Character(
-    val id: Int,
-    override val name: String,
+data class Character(
+    override val id: Int,
+    val name: String,
     val image: String
-) : Serializable, Item(name)
+) : Serializable, Item<Int>

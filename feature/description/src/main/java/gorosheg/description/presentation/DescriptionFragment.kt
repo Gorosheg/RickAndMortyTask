@@ -41,7 +41,11 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar: Toolbar = view.findViewById(R.id.toolbar)
 
-        toolbar.toolbarSettings(activity as AppCompatActivity, false, navigator::back)
+        toolbar.toolbarSettings(
+            activity = activity as AppCompatActivity,
+            isBackArrowEnabled = true,
+            callback = navigator::back
+        )
 
         subscribeOnViewModel()
         getData()

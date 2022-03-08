@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import gorosheg.episodes.R
 import gorosheg.myapplication.model.Episode
+import gorosheg.myapplication.utils.ItemsDiffCallback
 import gorosheg.myapplication.utils.inflate
 
 internal class EpisodesAdapter : RecyclerView.Adapter<EpisodesRecyclerViewHolder>() {
 
     var items: List<Episode> = emptyList()
         set(value) {
-            val diffResult = DiffUtil.calculateDiff(EpisodesDiffCallback(items, value))
+            val diffResult = DiffUtil.calculateDiff(ItemsDiffCallback(items, value))
             field = value
             diffResult.dispatchUpdatesTo(this)
         }
