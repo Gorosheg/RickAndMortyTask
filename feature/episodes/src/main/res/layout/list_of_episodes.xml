@@ -24,7 +24,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:text="Episode name"/>
 
         <TextView
             android:id="@+id/airDate"
@@ -34,7 +35,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:text="air date"/>
 
     </LinearLayout>
 
