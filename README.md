@@ -1,4 +1,4 @@
-# RedMadRobotTestTask
+# RickAndMortyTask
 
 Тестовое задание для компании Red_Mad_Robot.
 
